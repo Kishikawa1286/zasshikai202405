@@ -1,0 +1,39 @@
+{
+	"name": "Ubuntu",
+	"image": "ubuntu:jammy",
+	"features": {
+		"ghcr.io/devcontainers/features/python:1": {},
+		"ghcr.io/devcontainers/features/git:1": {},
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"configureZshAsDefaultShell": true
+		}
+	},
+	// python-dotenv, regex, aiohttp, nest_asyncio, tqdm is required.
+	"postCreateCommand": "pip install -r ./.devcontainer/requirements.txt",
+	"workspaceFolder": "/workspaces/latex-translator",
+	"shutdownAction": "stopCompose",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"ms-python.python",
+				"ms-toolsai.jupyter"
+			],
+			"settings": {
+				"terminal.integrated.shell": "/bin/bash",
+				"editor.codeActionsOnSave": {
+					"source.organizeImports.python": true
+				},
+				"python.analysis.typeCheckingMode": "basic",
+				"python.formatting.provider": "autopep8",
+				"python.formatting.autopep8Args": [
+					"--max-line-length",
+					"80"
+				],
+				"[python]": {
+					"editor.formatOnSave": true,
+					"editor.formatOnPaste": true
+				}
+			}
+		}
+	}
+}
