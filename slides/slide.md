@@ -2,7 +2,7 @@
 marp: true
 theme: default
 header: '雑誌会 2024/05/08'
-footer: 'Extension of TOPSIS to determine weight of decision maker for group ...'
+footer: 'An extended TOPSIS for determining weights of decision makers with ...'
 paginate: true
 size: 16:9
 style: |
@@ -154,7 +154,7 @@ math: katex
 
 <!-- _class: title -->
 
-# Extension of TOPSIS to determine weight of decision maker for group decision making problems with uncertain information
+# An extended TOPSIS for determining weights of decision makers with interval numbers
 <br><br>
 Zhongliang Yue
 Guangdong Ocean University
