@@ -170,6 +170,8 @@ Expert Systems with Applications 39 (2012)
   - TOPSIS の手続き
 - 研究の概要
 - 関連研究
+  - [40] 区間の属性値を扱う TOPSIS
+  - H.S. Shiha & H. Shyurb (2007)
 
 ---
 
@@ -242,7 +244,7 @@ $m$ 個の代替案 $A_1, A_2, \ldots, A_m$ があり, $n$ 個の属性 $X_1, X_
 
 $$
 D =
-\left( x_{ij} \right)_{n \times n} =
+\left( x_{ij} \right)_{m \times n} =
 \begin{bmatrix}
 x_{11} & x_{12} & \cdots & x_{1j} & \cdots & x_{1n} \\
 x_{21} & x_{22} & \cdots & x_{2j} & \cdots & x_{2n} \\
@@ -259,7 +261,7 @@ $$
 
 ## ステップ 1: 決定行列の作成・正規化
 
-$D$ を列（属性）ごとに正規化して, 正規化決定行列 $R = \left( r_{ij} \right)_{n \times n}$ を作成する.
+$D$ を列（属性）ごとに正規化して, 正規化決定行列 $R = \left( r_{ij} \right)_{m \times n}$ を作成する.
 
 $$
 r_{ij} = \frac{x_{ij}}{\sqrt{\sum_{i=1}^m x_{ij}^2}},
@@ -277,7 +279,7 @@ $$
 意思決定者が重みベクトル $w = \left( w_1, w_2, \ldots, w_n \right), ~~ w_j \geq 0, ~~ \sum_{j=1}^n w_j = 1$ を与える.
 （属性 $j$ に対する重みが $w_j$.）
 
-重みづけ正規化決定行列 $V = \left( v_{ij} \right)_{n \times n}$ を次のように作成する.
+重みづけ正規化決定行列 $V = \left( v_{ij} \right)_{m \times n}$ を次のように作成する.
 
 $$
 v_{ij} = w_j r_{ij},
@@ -333,7 +335,7 @@ $$
 
 ## ステップ 4: 分離尺度 (separation measure) の計算
 
-ユークリッド距離で各代替案 $A_i$ と理想解 $A^+$, 負の理想解 $A^-$ との分離尺度を計算する.
+ユークリッド距離で各代替案 $A_i$ と理想解 $A^+$ との分離尺度 $S_i^+$, 負の理想解 $A^-$ との分離尺度 $S_i^-$ を計算する.
 
 $$
 S_i^+ = \sqrt{\sum_{j=1}^n \left( v_{ij} - v_j^+ \right)^2},
@@ -383,5 +385,204 @@ $$
 
 ---
 
-# 研究の概要
+# 関連研究
 
+- [15] C.L. Hwang, K. Yoon (1981)
+TOPSIS の提案
+- [40] G.R. Jahanshahloo, F. Hosseinzadeh Lotfi, M. Izadikhah (2006)
+区間の属性値を扱う TOPSIS
+- [41] F. Ye, Y.N. Li (2009), **H.S. Shiha & H. Shyurb (2007)**
+グループ意思決定問題における TOPSIS
+
+---
+
+# 関連研究 - [40] 区間の属性値を扱う TOPSIS
+
+## ステップ 1: 決定行列の作成・正規化
+
+決定行列 $D$ の成分が区間になっている.
+$$
+D = \left( \left[ x_{ij}^\mathrm{L}, x_{ij}^\mathrm{U} \right] \right)_{m \times n}
+$$
+
+正規化決定行列 $R = \left( \left[ r_{ij}^\mathrm{L}, r_{ij}^\mathrm{U} \right] \right)_{m \times n}$ を次のように計算する.
+$$
+r_{ij}^\mathrm{L} = \frac{x_{ij}^\mathrm{L}}{\sqrt{\sum_{i=1}^m \left( \left( x_{ij}^\mathrm{L} \right)^2 + \left( x_{ij}^\mathrm{U} \right)^2 \right)}}, \quad
+r_{ij}^\mathrm{U} = \frac{x_{ij}^\mathrm{U}}{\sqrt{\sum_{i=1}^m \left( \left( x_{ij}^\mathrm{L} \right)^2 + \left( x_{ij}^\mathrm{U} \right)^2 \right)}}, \quad
+i = 1, 2, \ldots, m, ~~ j = 1, 2, \ldots, n
+$$
+この正規化で $\left[ r_{ij}^\mathrm{L}, r_{ij}^\mathrm{U} \right] \subseteq [0, 1]$ となることが保証される.
+
+---
+
+# 関連研究 - [40] 区間の属性値を扱う TOPSIS
+
+## ステップ 2: 属性ごとに重み付け
+
+属性値が crisp の場合と同様.
+
+意思決定者が crisp 重みベクトル $w = \left( w_1, w_2, \ldots, w_n \right), ~~ w_j \geq 0, ~~ \sum_{j=1}^n w_j = 1$ を与える.
+
+重みづけ正規化決定行列 $V = \left( \left[ v_{ij}^\mathrm{L}, v_{ij}^\mathrm{U} \right] \right)_{m \times n}$ を次のように作成する.
+
+$$
+v_{ij} = \left[ w_j r_{ij}^\mathrm{L}, w_j r_{ij}^\mathrm{U} \right],
+\quad i = 1, 2, \ldots, m, ~~ j = 1, 2, \ldots, n
+$$
+
+---
+
+# 関連研究 - [40] 区間の属性値を扱う TOPSIS
+
+## ステップ 3: 理想解と負の理想解の計算
+
+属性 $j$ が benefit (便益, 大きいほど良い) の場合, $j \in J^+$ とする.
+属性 $j$ が cost (費用, 小さいほど良い) の場合, $j \in J^-$ とする.
+
+理想解 $A^+ = \left( v_1^+, v_2^+, \ldots, v_n^+ \right)$, 負の理想解 $A^- = \left( v_1^-, v_2^-, \ldots, v_n^- \right)$ を次のように計算する.
+
+$$
+v_j^+ = \begin{cases}
+\max_{i=1, 2, \ldots, m} v_{ij}^\mathrm{U} & \text{if} \quad j \in J^+ \\
+\min_{i=1, 2, \ldots, m} v_{ij}^\mathrm{L} & \text{if} \quad j \in J^-
+\end{cases}
+$$
+
+$$
+v_j^- = \begin{cases}
+\min_{i=1, 2, \ldots, m} v_{ij}^\mathrm{L} & \text{if} \quad j \in J^+ \\
+\max_{i=1, 2, \ldots, m} v_{ij}^\mathrm{U} & \text{if} \quad j \in J^-
+\end{cases}
+$$
+
+---
+
+# 関連研究 - [40] 区間の属性値を扱う TOPSIS
+
+## ステップ 4: 分離尺度 (separation measure) の計算
+
+ユークリッド距離で各代替案 $A_i$ と理想解 $A^+$ との分離尺度 $S_i^+$, 負の理想解 $A^-$ との分離尺度 $S_i^-$ を計算する.
+
+$$
+\begin{align*}
+S_i^+ &= \sqrt{ \sum_{j \in J^+} \left( v_{j}^+ - v_{ij}^\mathrm{L} \right)^2 + \sum_{j \in J^-} \left( v_{ij}^\mathrm{U} - v_{j}^+ \right)^2 }, \quad 
+S_i^- = \sqrt{ \sum_{j \in J^+} \left( v_{ij}^\mathrm{U} - v_{j}^- \right)^2 + \sum_{j \in J^-} \left( v_{j}^- - v_{ij}^\mathrm{L} \right)^2 }, \\
+& \qquad \qquad i = 1, 2, \ldots, m
+\end{align*}
+$$
+
+## ステップ 5, 6
+
+crisp の場合と同様.
+
+---
+
+# 関連研究 - [40] 区間の属性値を扱う TOPSIS
+
+## ステップ 3, 4
+
+$j \in J^+$ の場合
+
+![center, height:430](./images/IMG_1223.JPEG)
+
+---
+
+# 関連研究 - グループ意思決定問題における TOPSIS
+
+## H.S. Shiha & H. Shyurb (2007)
+
+$K$ 人の意思決定者がそれぞれ決定行列 $D^k$ と重みベクトル $w^k$ を与える.
+
+理想解との相対近接度 (relative closeness) の計算 (ステップ 5) までは $D^k, w^k$ から意思決定者ごとに個別で計算する.
+意思決定者ごとに計算した相対近接度 $S_i^{k-}, S_i^{k+}, ~ i = 1, 2, \ldots, m$ を幾何平均で統合する.
+
+$$
+S_i^+ = \left( \prod_{k=1}^K S_i^{k+} \right)^\frac{1}{K},
+\quad S_i^- = \left( \prod_{k=1}^K S_i^{k-} \right)^{\frac{1}{K}},
+\quad i = 1, 2, \ldots, m
+$$
+
+---
+
+# 理論的準備
+
+## 定義 1. 非負の区間
+
+$a = \left[ a^\mathrm{L}, a^\mathrm{U} \right] = \left\{ x ~ | ~ a^\mathrm{L} \leq x \leq a^\mathrm{U} \right\}$ を非負の区間と呼ぶ.
+
+## 定義 2. 区間の演算
+
+$a = \left[ a^\mathrm{L}, a^\mathrm{U} \right], b = \left[ b^\mathrm{L}, b^\mathrm{U} \right]$ を非負の区間とする.
+$\lambda \geq 0$ をスカラーとする.
+次のように区間の演算を定義する.
+
+1. $a = b \Leftrightarrow a^\mathrm{L} = b^\mathrm{L} \text{ and } a^\mathrm{U} = b^\mathrm{U}$
+2. $a + b = \left[ a^\mathrm{L} + b^\mathrm{L}, a^\mathrm{U} + b^\mathrm{U} \right]$
+3. $\lambda a = \left[ \lambda a^\mathrm{L}, \lambda a^\mathrm{U} \right]$
+
+---
+
+# 理論的準備
+
+$\Omega$ をすべての非負の区間の集合とする.
+
+## 定義 3. 区間の加重平均
+
+$a_i = \left[ a_i^\mathrm{L}, a_i^\mathrm{U} \right], ~ i = 1, 2, \ldots, n$ を非負の区間とする.
+$w = \left( w_1, w_2, \ldots, w_n \right), ~~ \sum_{i=1}^n w_i = 1, ~~ w_i \geq 0 (i = 1, 2, \ldots, n)$ を重みベクトルとする.
+このとき, $a_i, ~ i = 1, 2, \ldots, n$ の加重平均 $\mathrm{WA}(a, w)$ を次のように定義する.
+
+$$
+\mathrm{WA}(a, w) = \left[ \sum_{i=1}^n w_i a_i^\mathrm{L}, \sum_{i=1}^n w_i a_i^\mathrm{U} \right]
+$$
+
+---
+
+# 理論的準備
+
+## 定義 4. 区間の大小関係
+
+$a = \left[ a^\mathrm{L}, a^\mathrm{U} \right], b = \left[ b^\mathrm{L}, b^\mathrm{U} \right]$ を非負の区間とする.
+$|a| = a^\mathrm{U} - a^\mathrm{L}, |b| = b^\mathrm{U} - b^\mathrm{L}$ とする.
+このとき $a \leq b$ の可能性度 (degree of possibility of $a \leq b$) $p(q \leq b)$ を次のように定義する.
+
+$$
+p(a \leq b) = \max \left( 0, ~~ 1 - \max\left(0, ~~ \frac{b^\mathrm{U} - a^\mathrm{L}}{|a| + |b|}\right) \right)
+$$
+
+1. $0 \leq p(a \leq b) \leq 1$
+2. $p(a \leq b) = 1 \Leftrightarrow a^\mathrm{L} \geq b^\mathrm{U}$
+3. $p(a \leq b) = 0 \Leftrightarrow a^\mathrm{U} \leq b^\mathrm{L}$
+4. $p(a \leq a) = 1/2$
+5. $p(a \leq b) + p(b \leq a) = 1$
+
+---
+
+# 理論的準備
+
+非負の区間 $a_i = \left[ a_i^\mathrm{L}, a_i^\mathrm{U} \right]$ と重みベクトル $w = \left( w_1, w_2, \ldots, w_n \right), ~~ \sum_{i=1}^n w_i = 1, ~~ w_i \geq 0 (i = 1, 2, \ldots, n)$ に対して, $p$ によって行列 $P = \left( p_{ij} \right)_{n \times n}$ を次のように定義する.
+
+$$
+p_{ij} = p(a_i \geq a_j), \quad i, j = 1, 2, \ldots, n
+$$
+
+---
+
+# 提案手法
+
+## 問題設定
+
+| 文字 | 意味 |
+|---|---|
+| $m$ | 代替案の数 |
+| $A = \left\{ A_1, A_2, \ldots, A_m \right\}$ | 代替案の集合 |
+| $n$ | 属性の数 |
+| $U = \left\{ u_1, u_2, \ldots, u_n \right\}$ | 属性の集合 |
+| $w = \left( w_1, w_2, \ldots, w_n \right)$ | 属性の重みベクトル（全員で共通） |
+| $t$ | 意思決定者の人数 |
+| $D = \left\{ d_1, d_2, \ldots, d_K \right\}$ | 意思決定者の集合 |
+| $\lambda = \left( \lambda_1, \lambda_2, \ldots, \lambda_t \right)$ | 意思決定者の重みベクトル |
+
+---
+
+# 提案手法
