@@ -192,7 +192,7 @@ AHP, TOPSIS, SMART などの方法がある.
 
 ---
 
-# TOPSIS の概要
+# TOPSIS の概要 [15]
 
 **T**echnique for **O**rder **P**reference by **S**imilarity to **I**deal **S**olution
 （理想解との類似度による順序付け手法）
@@ -211,7 +211,7 @@ AHP, TOPSIS, SMART などの方法がある.
 
 ---
 
-# TOPSIS の概要
+# TOPSIS の概要 [15]
 
 ![center, height:450](./images/IMG_1221.JPEG)
 
@@ -220,7 +220,7 @@ $\qquad$ → 理想解からの距離と負の理想解からの距離とのバ�
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 $m$ 個の代替案 $A_1, A_2, \ldots, A_m$ があり, $n$ 個の属性 $X_1, X_2, \ldots, X_n$ があるとする.
 代替案 $i$ の属性 $j$ の値を $x_{ij}$ とする.
@@ -236,7 +236,7 @@ $m$ 個の代替案 $A_1, A_2, \ldots, A_m$ があり, $n$ 個の属性 $X_1, X_
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 ## ステップ 1: 決定行列の作成・正規化
 
@@ -257,7 +257,7 @@ $$
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 ## ステップ 1: 決定行列の作成・正規化
 
@@ -272,7 +272,7 @@ $$
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 ## ステップ 2: 属性ごとに重み付け
 
@@ -306,7 +306,7 @@ $$
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 ## ステップ 3: 理想解と負の理想解の計算
 
@@ -331,7 +331,7 @@ $$
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 ## ステップ 4: 分離尺度 (separation measure) の計算
 
@@ -345,7 +345,7 @@ $$
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 ## ステップ 5: 理想解との相対近接度 (relative closeness) の計算
 
@@ -358,16 +358,22 @@ $$
 
 - $\mathrm{RC}_i$ が大きいほど, 代替案 $A_i$ は理想解 $A^+$ に近い.
 - $0 < \mathrm{RC}_i < 1$.
-- $A_i = A^+$ のとき, $\mathrm{RC}_i = 1$.
-- $A_i = A^-$ のとき, $\mathrm{RC}_i = 0$.
+- $A_i = A^+$ のとき $\mathrm{RC}_i = 1$.
+- $A_i = A^-$ のとき $\mathrm{RC}_i = 0$.
 
 ---
 
-# TOPSIS の手続き
+# TOPSIS の手続き [15]
 
 ## ステップ 6: 順序付け
 
 相対近接度 $\mathrm{RC}_i, ~~ i = 1, 2, \ldots, m$ が大きい順に代替案を順序付ける.
+
+---
+
+# 提案手法
+
+一連の流れの図
 
 ---
 
@@ -560,7 +566,7 @@ $$
 
 # 理論的準備
 
-非負の区間 $a_i = \left[ a_i^\mathrm{L}, a_i^\mathrm{U} \right]$ と重みベクトル $w = \left( w_1, w_2, \ldots, w_n \right), ~~ \sum_{i=1}^n w_i = 1, ~~ w_i \geq 0 (i = 1, 2, \ldots, n)$ に対して, $p$ によって行列 $P = \left( p_{ij} \right)_{n \times n}$ を次のように定義する.
+非負の区間 $a_i = \left[ a_i^\mathrm{L}, a_i^\mathrm{U} \right]$ と重みベクトル $w = \left( w_1, w_2, \ldots, w_n \right), ~~ \sum_{i=1}^n w_i = 1, ~~ w_i \geq 0 ~ (i = 1, 2, \ldots, n)$ に対して, $p$ によって行列 $P(a_i, w) = \left( p_{ij} \right)_{n \times n}$ を次のように定義する.
 
 $$
 p_{ij} = p(a_i \geq a_j), \quad i, j = 1, 2, \ldots, n
@@ -586,3 +592,209 @@ $$
 ---
 
 # 提案手法
+
+## ステップ 1: 決定行列の作成・正規化
+
+### 決定行列の作成
+
+各意思決定者が区間決定行列を与える.
+意思決定者 $d_k \in D$ が与える区間決定行列を $X_k = \left( \left[ X_{ij}^{k(\mathrm{L})}, X_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ とする.
+
+<!-- ---
+
+# 提案手法
+
+## ステップ 1: 決定行列の作成・正規化
+
+### 決定行列の正規化
+
+正規化は二段階で行う.
+第一段階では次の操作を行い, $Y_k = \left( \left[ y_{ij}^{k(\mathrm{L})}, y_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ を作成する [46].
+
+$$
+y_{ij}^{k(\mathrm{L})} = \begin{cases}
+\frac{x_{ij}^{k(\mathrm{L})}}{\sum_{i=1}^m x_{ij}^{k(\mathrm{U})}}, & \text{if } u_i \text{ is benefit} \\
+\frac{1/x_{ij}^{k(\mathrm{U})}}{\sum_{i=1}^m 1/x_{ij}^{k(\mathrm{L})}}, & \text{if } u_i \text{ is cost}
+\end{cases}, \quad
+y_{ij}^{k(\mathrm{U})} = \begin{cases}
+\frac{x_{ij}^{k(\mathrm{U})}}{\sum_{i=1}^m x_{ij}^{k(\mathrm{L})}}, & \text{if } u_i \text{ is benefit} \\
+\frac{1/x_{ij}^{k(\mathrm{L})}}{\sum_{i=1}^m 1/x_{ij}^{k(\mathrm{U})}}, & \text{if } u_i \text{ is cost}
+\end{cases}, \\
+i \in M, ~~ j \in N, ~~ k = 1, 2, \ldots, t
+$$
+
+この操作で属性の次元が打ち消され, 無次元になる.
+しかし, $Y_k$ の成分の区間は $[0, 1]$ に必ずしも収まらない. -->
+
+---
+
+# 提案手法
+
+## ステップ 1: 決定行列の作成・正規化
+
+### 決定行列の正規化
+
+次の操作を行い, 正規化決定行列 $R_k = \left( \left[ r_{ij}^{k(\mathrm{L})}, r_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ を作成する [40].
+
+$$
+r_{ij}^{k(\mathrm{L})} = \frac{x_{ij}^{k(\mathrm{L})}}{\sqrt{\sum_{i=1}^m \left( \left( x_{ij}^{k(\mathrm{L})} \right)^2 + \left( x_{ij}^{k(\mathrm{U})} \right)^2 \right)}}
+$$
+
+- $\left[ r_{ij}^{k(\mathrm{L})}, r_{ij}^{k(\mathrm{U})} \right] \subseteq [0, 1]$
+- $r_{ij}^{k(\mathrm{L})}, r_{ij}^{k(\mathrm{U})}$ は無次元
+
+---
+
+# 提案手法
+
+## ステップ 2: 属性ごとに重み付け
+
+全ての意思決定者に共通の crisp 重みベクトル 
+$w = \left( w_1, w_2, \ldots, w_n \right), ~~ w_j \geq 0, ~~ \sum_{j=1}^n w_j = 1$ を与える.
+
+重みづけ正規化決定行列 $V^k = \left( \left[ v_{ij}^{k(\mathrm{L})}, v_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ を次のように作成する.
+
+$$
+v_{ij} = \left[ w_j r_{ij}^{k(\mathrm{L})}, w_j r_{ij}^{k(\mathrm{U})} \right],
+\quad i \in M, ~~ j \in N, ~~ k = 1, 2, \ldots, t
+$$
+
+---
+
+# 提案手法
+
+## ステップ 3: 理想解と負の理想解の計算
+
+次のようにグループの理想解 $A^+ = \left( \left[ v_{ij}^{+(\mathrm{L})}, v_{ij}^{+(\mathrm{U})} \right] \right)_{m \times n}$, $A^- = \left( \left[ v_{ij}^{-(\mathrm{L})}, v_{ij}^{-(\mathrm{U})} \right] \right)_{m \times n}$ を計算する.
+
+$A^+$ は上限・下限それぞれで平均をとる.
+
+$$
+v_{ij}^{+(\mathrm{L})} = \frac{1}{t} \sum_{k=1}^t v_{ij}^{k(\mathrm{L})},
+\quad v_{ij}^{+(\mathrm{U})} = \frac{1}{t} \sum_{k=1}^t v_{ij}^{k(\mathrm{U})},
+\quad i \in M, ~~ j \in N
+$$
+
+$A^-$ は区間の和集合をとる.
+
+$$
+v_{ij}^{-{(\mathrm{L})}} = \min_{k=1, 2, \ldots, t} v_{ij}^{k(\mathrm{L})},
+\quad v_{ij}^{-{(\mathrm{U})}} = \max_{k=1, 2, \ldots, t} v_{ij}^{k(\mathrm{U})},
+\quad i \in M, ~~ j \in N
+$$
+
+---
+
+# 提案手法
+
+## ステップ 4: 意思決定者の分離尺度 (separation measure) の計算
+
+$V^k$ の平均 $A^+$ との近さの尺度 $S_k^+$, 極端な値を集めた $A^-$ との近さの尺度 $S_k^-$ を計算する.
+
+$$
+S_k^+ = \sqrt{\sum_{i=1}^m \sum_{j=1}^n \left( \left( v_{ij}^{k(\mathrm{L})} - v_{ij}^{+(\mathrm{L})} \right)^2 + \left( v_{ij}^{k(\mathrm{U})} - v_{ij}^{+(\mathrm{U})} \right)^2 \right)}, ~~ k = 1, 2, \ldots, t \\
+\quad S_k^- = \sqrt{\sum_{i=1}^m \sum_{j=1}^n \left( \left( v_{ij}^{k(\mathrm{L})} - v_{ij}^{-(\mathrm{L})} \right)^2 + \left( v_{ij}^{k(\mathrm{U})} - v_{ij}^{-(\mathrm{U})} \right)^2 \right)}, ~~ k = 1, 2, \ldots, t
+$$
+
+---
+
+# 提案手法
+
+## ステップ 4: 意思決定者の重みの計算
+
+次のように $S_k^+, S_k^-$ から相対近接度 $\mathrm{RC}_k$ を計算する.
+$V^k$ の平均 $A^+$ に近く, 極端な値を集めた $A^-$ から遠いほど $\mathrm{RC}_k$ は大きくなる.
+
+$$
+\mathrm{RC}_k = \frac{S_k^-}{S_k^+ + S_k^-}, ~~ k = 1, 2, \ldots, t
+$$
+
+$\mathrm{RC}_k$ から意思決定者の重み $\lambda_k$ を次のように計算する.
+
+$$
+\lambda_k = \frac{\mathrm{RC}_k}{\sum_{k=1}^t \mathrm{RC}_k}, ~~ k = 1, 2, \ldots, t
+$$
+
+---
+
+# 提案手法
+
+## ステップ 5: 重みづけ正規化決定行列の統合
+
+各意思決定者の重みづけ正規化決定行列 $V^k$ と重み $\lambda_k$ を用いて,
+統合した重みづけ正規化決定行列 $V = \left( \left[ v_{ij}^{(\mathrm{L})}, v_{ij}^{(\mathrm{U})} \right] \right)_{m \times n}$ を次のように作成する.
+
+$$
+v_{ij}^{(\mathrm{L})} = \sum_{k=1}^t \lambda_k v_{ij}^{k(\mathrm{L})},
+\quad v_{ij}^{(\mathrm{U})} = \sum_{k=1}^t \lambda_k v_{ij}^{k(\mathrm{U})},
+\quad i \in M, ~~ j \in N
+$$
+
+---
+
+# 提案手法
+
+## ステップ 6: 代替案の順位付け
+
+代替案 $A_i, ~ i \in M$ に対して, 次のように $v_i = \left[ v_i^{(\mathrm{L})}, v_i^{(\mathrm{U})} \right]$ を計算する.
+
+$$
+v_i = \left[ v_i^{(\mathrm{L})}, v_i^{(\mathrm{U})} \right]
+= \left[ \sum_{j=1}^n v_{ij}^{(\mathrm{L})}, \sum_{j=1}^n v_{ij}^{(\mathrm{U})} \right],
+\quad i \in M
+$$
+
+$v = \left( v_1, v_2, \ldots, v_m \right)$ とする.
+$i, j$ 成分が $v_i \geq v_j$ の可能性度 $p(v_i \geq v_j)$ である行列を計算する.
+
+$$
+P(v, w) = \left( p(v_i \geq v_j) \right)_{m \times m}
+$$
+
+この行列の行ごとの和を計算し, 代替案の順位を求める.
+
+---
+
+# 提案手法
+
+一連の流れの図
+
+---
+
+# 数値例
+
+珠江デルタ地域の大気質データを用いて, この地域の 2006, 2007, 2008 年 11 月の大気質の比較を行う.
+
+この地域には 3 箇所の大気質監視施設があり, それぞれの施設を意思決定者とみなす.
+代替案は $\{ A_1, A_2, A_3 \} = \{2006, 2007, 2008\}$ 年で,
+属性は 3 つの大気汚染物質 $\{ u_1, u_2, u_3 \} = \{ \text{SO}_2, \text{NO}_2, \text{PM}_{10} \}$ である.
+属性の重みは全ての意思決定者（施設）で共通とし, $w = \left( 1/3, 1/3, 1/3 \right)^\mathrm{T}$ とする.
+
+---
+
+# 数値例
+
+次のような決定行列が意思決定者（施設）ごとに与えられる.
+
+| 代替案（年） | $\text{SO}_2$ | $\text{NO}_2$ | $\text{PM}_{10}$ |
+|---|---|---|---|
+| $A_1$ (2006) | $\left[ 0.013, 0.129 \right]$ | $\left[ 0.028, 0.144 \right]$ | $\left[ 0.021, 0.136 \right]$ |
+| $A_2$ (2007) | $\left[ 0.013, 0.107 \right]$ | $\left[ 0.038, 0.139 \right]$ | $\left[ 0.047, 0.155 \right]$ |
+| $A_3$ (2008) | $\left[ 0.003, 0.042 \right]$ | $\left[ 0.018, 0.054 \right]$ | $\left[ 0.014, 0.150 \right]$ |
+
+3 つの決定行列と属性の重みに基づき, 提案手法で代替案の順位付けを行う.
+
+---
+
+# 結論
+
+- 区間決定行列が与えられるグループ多属性意思決定問題において意思決定者の重みを決定する手法を提案した.
+    - 数値例のように決定行列の成分が区間
+    - 複数の意思決定者がそれぞれ決定行列を与える
+    - 意思決定者の重みを計算する
+        - 平均に近く, 極端な値から遠いほど重みが大きくなる
+    - 決定行列を統合する
+- 順位づけのときに区間同士を比較する必要がない
+    - $v_i \leq v_j$ の可能性度で考えるため
+
+- 区間だけでなく, ファジィ数などでも同じ議論ができる
