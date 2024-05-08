@@ -148,6 +148,10 @@ style: |
         font-size: 0.65em;
     }
 
+    table {
+        font-size: 0.9em;
+    }
+
 math: katex
 
 ---
@@ -164,14 +168,13 @@ Expert Systems with Applications 39 (2012)
 
 # 構成
 
-- TOPSIS について
-  - 多属性意思決定
-  - TOPSIS の概要
-  - TOPSIS の手続き
+- TOPSIS について（多属性意思決定, TOPSIS の概要, TOPSIS の手続き）
 - 研究の概要
-- 関連研究
-  - [40] 区間の属性値を扱う TOPSIS
-  - H.S. Shiha & H. Shyurb (2007)
+- 関連研究 ([40] 区間の属性値を扱う TOPSIS, H.S. Shiha & H. Shyurb (2007))
+- 理論的準備
+- 提案手法
+- 数値例
+- 結論
 
 ---
 
@@ -372,8 +375,87 @@ $$
 ---
 
 # 提案手法
+.
 
-一連の流れの図
+![center, height:600](./images/IMG_1224.JPEG)
+
+---
+
+# 数値例
+
+### ステップ 1: 決定行列の作成・正規化
+
+| 代替案 | 価格 (万円) | 駅からの距離 (km) | 広さ ($\mathrm{m}^2$) |
+|-------|------------|-----------------------|----------|
+| 家 A  | 2500       | 0.5                   | 100      |
+| 家 B  | 1800       | 1.2                   | 80       |
+| 家 C  | 2200       | 0.8                   | 90       |
+
+決定行列 $D$, 正規化決定行列 $R$ は次のようになる.
+$$
+D = \begin{bmatrix}
+2500 & 0.5 & 100 \\
+1800 & 1.2 & 80 \\
+2200 & 0.8 & 90
+\end{bmatrix}, \quad
+R = \begin{bmatrix}
+0.6604 & 0.3276 & 0.6389 \\
+0.4755 & 0.7861 & 0.5111 \\
+0.5812 & 0.5241 & 0.5750
+\end{bmatrix}
+$$
+
+---
+
+# 数値例
+
+### ステップ 2: 属性ごとに重み付け
+
+属性の重みを $w = \left( 0.3, 0.4, 0.3 \right)^\mathrm{T}$ とする.
+
+
+$$
+V = R I_3 w = \begin{bmatrix}
+0.1981 & 0.1902 & 0.1744 \\
+0.0983 & 0.3144 & 0.1572 \\
+​0.1917 & 0.2096 & 0.1725 \\
+\end{bmatrix}
+$$
+
+## ステップ 3: 理想解と負の理想解の計算
+
+| 代替案 | 価格 (万円) | 駅からの距離 (km) | 広さ ($\mathrm{m}^2$) |
+|-------|------------|-----------------------|----------|
+| cost/benefit | cost | cost | benefit |
+| 理想解 $A^+$  | 0.0983       | 0.1902                   | 0.1744     |
+| 負の理想解 $A^-$  | 0.1981      | 0.3144                   | 0.1572       |
+
+---
+
+# 数値例
+
+### ステップ 4: 分離尺度の計算
+
+$$
+S_1^+ = 0.1173, ~~
+S_2^+ = 0.1336, ~~
+S_3^+ = 0.0785, \\
+S_1^- = 0.1866, ~~
+S_2^- = 0.0556, ~~
+S_3^- = 0.1085, ~~
+$$
+
+### ステップ 5: 理想解との相対近接度の計算
+
+$$
+\mathrm{RC}_1 = 0.6140, ~~
+\mathrm{RC}_2 = 0.2939, ~~
+\mathrm{RC}_3 = 0.5892
+$$
+
+### ステップ 6: 順序付け
+
+$A_1 \succ A_3 \succ A_2$ の順になる.
 
 ---
 
@@ -566,11 +648,13 @@ $$
 
 # 理論的準備
 
-非負の区間 $a_i = \left[ a_i^\mathrm{L}, a_i^\mathrm{U} \right]$ と重みベクトル $w = \left( w_1, w_2, \ldots, w_n \right), ~~ \sum_{i=1}^n w_i = 1, ~~ w_i \geq 0 ~ (i = 1, 2, \ldots, n)$ に対して, $p$ によって行列 $P(a_i, w) = \left( p_{ij} \right)_{n \times n}$ を次のように定義する.
+非負の区間 $a_i = \left[ a_i^\mathrm{L}, a_i^\mathrm{U} \right]$ と重みベクトル $w = \left( w_1, w_2, \ldots, w_n \right), ~~ \sum_{i=1}^n w_i = 1, ~~ w_i \geq 0 ~ (i = 1, 2, \ldots, n)$ に対して, $p$ によってベクトル $p(a_i, w) = \left( p_i \right)_m$ を次のように定義する.
 
 $$
-p_{ij} = p(a_i \geq a_j), \quad i, j = 1, 2, \ldots, n
+p_i = \sum_{j=1}^m p(a_i \geq a_j), \quad i = 1, 2, \ldots, m
 $$
+
+$p$ の値によって, 代替案の順位付けを行う.
 
 ---
 
@@ -584,9 +668,9 @@ $$
 | $A = \left\{ A_1, A_2, \ldots, A_m \right\}$ | 代替案の集合 |
 | $n$ | 属性の数 |
 | $U = \left\{ u_1, u_2, \ldots, u_n \right\}$ | 属性の集合 |
-| $w = \left( w_1, w_2, \ldots, w_n \right)$ | 属性の重みベクトル（全員で共通） |
 | $t$ | 意思決定者の人数 |
-| $D = \left\{ d_1, d_2, \ldots, d_K \right\}$ | 意思決定者の集合 |
+| $D = \left\{ d_1, d_2, \ldots, d_t \right\}$ | 意思決定者の集合 |
+| $w_k = \left( w^k_1, w^k_2, \ldots, w^k_n \right)$ | 意思決定者 $d_k$ が与える属性の重みベクトル |
 | $\lambda = \left( \lambda_1, \lambda_2, \ldots, \lambda_t \right)$ | 意思決定者の重みベクトル |
 
 ---
@@ -598,7 +682,7 @@ $$
 ### 決定行列の作成
 
 各意思決定者が区間決定行列を与える.
-意思決定者 $d_k \in D$ が与える区間決定行列を $X_k = \left( \left[ X_{ij}^{k(\mathrm{L})}, X_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ とする.
+意思決定者 $d_k \in D$ が与える区間決定行列を $X_k = \left( x_{ij}^k \right)_{m \times n} = \left( \left[ x_{ij}^{k(\mathrm{L})}, x_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ とする.
 
 <!-- ---
 
@@ -647,15 +731,34 @@ $$
 
 # 提案手法
 
-## ステップ 2: 属性ごとに重み付け
+## ステップ 1: 決定行列の作成・正規化
 
-全ての意思決定者に共通の crisp 重みベクトル 
-$w = \left( w_1, w_2, \ldots, w_n \right), ~~ w_j \geq 0, ~~ \sum_{j=1}^n w_j = 1$ を与える.
-
-重みづけ正規化決定行列 $V^k = \left( \left[ v_{ij}^{k(\mathrm{L})}, v_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ を次のように作成する.
+$r_{ij}^k = x_{ij}^k / \sqrt{ \sum_{i = 1}^m \left( x_{ij}^k \right)^2 }$ ではない.
 
 $$
-v_{ij} = \left[ w_j r_{ij}^{k(\mathrm{L})}, w_j r_{ij}^{k(\mathrm{U})} \right],
+\begin{align*}
+\frac{x_{ij}^k}{\sqrt{ \sum_{i = 1}^m \left( x_{ij}^k \right)^2 }}
+& = \frac{\left[ x_{ij}^{k(\mathrm{L})}, x_{ij}^{k(\mathrm{U})} \right]}{\sqrt{ \sum_{i = 1}^m \left( \left[ x_{ij}^{k(\mathrm{L})}, x_{ij}^{k(\mathrm{U})} \right] \right)^2 }}
+= \frac{\left[ x_{ij}^{k(\mathrm{L})}, x_{ij}^{k(\mathrm{U})} \right]}{\left[ \sqrt{\sum_{i=1}^m \left( x_{ij}^{k(\mathrm{L})} \right)^2}, \sqrt{\sum_{i=1}^m \left( x_{ij}^{k(\mathrm{U})} \right)^2} \right] } \\
+& \qquad = \left[ \frac{x_{ij}^{k(\mathrm{L})}}{\sqrt{\sum_{i=1}^m \left( x_{ij}^{k(\mathrm{U})} \right)^2}}, \frac{x_{ij}^{k(\mathrm{U})}}{\sqrt{\sum_{i=1}^m \left( x_{ij}^{k(\mathrm{L})} \right)^2}} \right]
+\end{align*}
+$$
+
+$\sqrt{\sum_{i=1}^m \left( \left( x_{ij}^{k(\mathrm{L})} \right)^2 + \left( x_{ij}^{k(\mathrm{U})} \right)^2 \right)}$ は $\left( x_{1j}^{k(\mathrm{L})}, x_{1j}^{k(\mathrm{U})}, x_{2j}^{k(\mathrm{L})}, x_{2j}^{k(\mathrm{U})}, \ldots, x_{mj}^{k(\mathrm{L})}, x_{mj}^{k(\mathrm{U})} \right)$ のノルム.
+
+---
+
+# 提案手法
+
+## ステップ 2: 属性ごとに重み付け
+
+各意思決定者が crisp 重みベクトル 
+$w_k = \left( w^k_1, w^k_2, \ldots, w^k_n \right), ~~ w^k_j \geq 0, ~~ \sum_{j=1}^n w^k_j = 1$ を与える.
+
+重みづけ正規化決定行列 $V_k = \left( \left[ v_{ij}^{k(\mathrm{L})}, v_{ij}^{k(\mathrm{U})} \right] \right)_{m \times n}$ を次のように作成する.
+
+$$
+v_{ij} = \left[ w^k_j r_{ij}^{k(\mathrm{L})}, w^k_j r_{ij}^{k(\mathrm{U})} \right],
 \quad i \in M, ~~ j \in N, ~~ k = 1, 2, \ldots, t
 $$
 
@@ -665,7 +768,7 @@ $$
 
 ## ステップ 3: 理想解と負の理想解の計算
 
-次のようにグループの理想解 $A^+ = \left( \left[ v_{ij}^{+(\mathrm{L})}, v_{ij}^{+(\mathrm{U})} \right] \right)_{m \times n}$, $A^- = \left( \left[ v_{ij}^{-(\mathrm{L})}, v_{ij}^{-(\mathrm{U})} \right] \right)_{m \times n}$ を計算する.
+グループの理想解 $A^+ = \left( \left[ v_{ij}^{+(\mathrm{L})}, v_{ij}^{+(\mathrm{U})} \right] \right)_{m \times n}$, $A^- = \left( \left[ v_{ij}^{-(\mathrm{L})}, v_{ij}^{-(\mathrm{U})} \right] \right)_{m \times n}$ を計算する.
 
 $A^+$ は上限・下限それぞれで平均をとる.
 
@@ -700,7 +803,18 @@ $$
 
 # 提案手法
 
-## ステップ 4: 意思決定者の重みの計算
+## 単純に平均をとって統合する場合と違うのか？
+
+加重平均で決定行列を統合する場合と, 単純に平均をとって決定行列を統合する場合との違いを数値例で見る.
+
+基本的には平均をとる場合と加重平均をとる場合で結果は変わらない.
+加重平均の方が多数派に寄った結果になる.
+
+---
+
+# 提案手法
+
+## ステップ 5: 意思決定者の重みの計算
 
 次のように $S_k^+, S_k^-$ から相対近接度 $\mathrm{RC}_k$ を計算する.
 $V^k$ の平均 $A^+$ に近く, 極端な値を集めた $A^-$ から遠いほど $\mathrm{RC}_k$ は大きくなる.
@@ -719,7 +833,7 @@ $$
 
 # 提案手法
 
-## ステップ 5: 重みづけ正規化決定行列の統合
+## ステップ 6: 重みづけ正規化決定行列の統合
 
 各意思決定者の重みづけ正規化決定行列 $V^k$ と重み $\lambda_k$ を用いて,
 統合した重みづけ正規化決定行列 $V = \left( \left[ v_{ij}^{(\mathrm{L})}, v_{ij}^{(\mathrm{U})} \right] \right)_{m \times n}$ を次のように作成する.
@@ -734,7 +848,7 @@ $$
 
 # 提案手法
 
-## ステップ 6: 代替案の順位付け
+## ステップ 7: 代替案の順位付け
 
 代替案 $A_i, ~ i \in M$ に対して, 次のように $v_i = \left[ v_i^{(\mathrm{L})}, v_i^{(\mathrm{U})} \right]$ を計算する.
 
@@ -745,19 +859,7 @@ v_i = \left[ v_i^{(\mathrm{L})}, v_i^{(\mathrm{U})} \right]
 $$
 
 $v = \left( v_1, v_2, \ldots, v_m \right)$ とする.
-$i, j$ 成分が $v_i \geq v_j$ の可能性度 $p(v_i \geq v_j)$ である行列を計算する.
-
-$$
-P(v, w) = \left( p(v_i \geq v_j) \right)_{m \times m}
-$$
-
-この行列の行ごとの和を計算し, 代替案の順位を求める.
-
----
-
-# 提案手法
-
-一連の流れの図
+$v_i \geq v_j$ の可能性度 $p(v_i \geq v_j)$ をそれぞれ計算して代替案の順位付けを行う.
 
 ---
 
@@ -768,7 +870,7 @@ $$
 この地域には 3 箇所の大気質監視施設があり, それぞれの施設を意思決定者とみなす.
 代替案は $\{ A_1, A_2, A_3 \} = \{2006, 2007, 2008\}$ 年で,
 属性は 3 つの大気汚染物質 $\{ u_1, u_2, u_3 \} = \{ \text{SO}_2, \text{NO}_2, \text{PM}_{10} \}$ である.
-属性の重みは全ての意思決定者（施設）で共通とし, $w = \left( 1/3, 1/3, 1/3 \right)^\mathrm{T}$ とする.
+属性の重みは全ての意思決定者（施設）で共通とし, $w = \left( 0.4, 0.2, 0.4 \right)^\mathrm{T}$ とする.
 
 ---
 
@@ -783,6 +885,41 @@ $$
 | $A_3$ (2008) | $\left[ 0.003, 0.042 \right]$ | $\left[ 0.018, 0.054 \right]$ | $\left[ 0.014, 0.150 \right]$ |
 
 3 つの決定行列と属性の重みに基づき, 提案手法で代替案の順位付けを行う.
+
+---
+
+
+| 決定行列 | 代替案（年） | $\text{SO}_2$ | $\text{NO}_2$ | $\text{PM}_{10}$ |
+|---|---|---|---|---|
+| $V_1$ | $A_1$ (2006) | $\left[ 0.001, 0.088 \right]$ | $\left[ 0.005, 0.100 \right]$ | $\left[ 0.005, 0.215 \right]$ |
+| $V_1$ | $A_2$ (2007) | $\left[ 0.001, 0.088 \right]$ | $\left[ 0.006, 0.074 \right]$ | $\left[ 0.004, 0.096 \right]$ |
+| $V_1$ | $A_3$ (2008) | $\left[ 0.002, 0.380 \right]$ | $\left[ 0.014, 0.156 \right]$ | $\left[ 0.004, \underline{0.323} \right]$ |
+| $V_2$ | $A_1$ (2006) | $\left[ 0.006, 0.127 \right]$ | $\left[ 0.009, 0.080 \right]$ | $\left[ 0.012, 0.209 \right]$ |
+| $V_2$ | $A_2$ (2007) | $\left[ 0.008, 0.108 \right]$ | $\left[ 0.010, 0.068 \right]$ | $\left[ 0.011, 0.096 \right]$ |
+| $V_2$ | $A_3$ (2008) | $\left[ 0.009, 0.363 \right]$ | $\left[ 0.009, 0.170 \right]$ | $\left[ 0.012, \underline{0.327} \right]$ |
+| $V_3$ | $A_1$ (2006) | $\left[ 0.003, 0.316 \right]$ | $\left[ 0.000, 0.048 \right]$ | $\left[ 0.000, 0.382 \right]$ |
+| $V_3$ | $A_2$ (2007) | $\left[ 0.007, 0.126 \right]$ | $\left[ 0.001, 0.190 \right]$ | $\left[ 0.000, 0.055 \right]$ |
+| $V_3$ | $A_3$ (2008) | $\left[ 0.010, 0.210 \right]$ | $\left[ 0.001, 0.038 \right]$ | $\left[ 0.001, \underline{0.104} \right]$ |
+
+$\lambda = (0.3563,0.3625,0.2812)^\mathrm{T}$
+
+---
+
+**加重平均の場合 (表 16)**
+
+| 代替案（年） | $\text{SO}_2$ | $\text{NO}_2$ | $\text{PM}_{10}$ |
+|---|---|---|---|
+| $A_1$ (2006) | $\left[ 0.003, 0.166 \right]$ | $\left[ 0.005, 0.078 \right]$ | $\left[ 0.006, 0.260 \right]$ |
+| $A_2$ (2007) | $\left[ 0.005, 0.106 \right]$ | $\left[ 0.006, 0.104 \right]$ | $\left[ 0.006, 0.084 \right]$ |
+| $A_3$ (2008) | $\left[ 0.007, 0.326 \right]$ | $\left[ 0.009, 0.128 \right]$ | $\left[ 0.006, \underline{0.263} \right]$ |
+
+**平均の場合**
+
+| 代替案（年） | $\text{SO}_2$ | $\text{NO}_2$ | $\text{PM}_{10}$ |
+|---|---|---|---|
+| $A_1$ (2006) | $\left[ 0.003, 0.177 \right]$ | $\left[ 0.005, 0.076 \right]$ | $\left[ 0.006, 0.269 \right]$ |
+| $A_2$ (2007) | $\left[ 0.005, 0.107 \right]$ | $\left[ 0.005, 0.111 \right]$ | $\left[ 0.005, 0.082 \right]$ |
+| $A_3$ (2008) | $\left[ 0.007, 0.318 \right]$ | $\left[ 0.008, 0.121 \right]$ | $\left[ 0.006, \underline{0.251} \right]$ |
 
 ---
 
